@@ -10,6 +10,15 @@ export const applicationsRepository = {
     return result.rows;
   },
 
+  async findById(id: number): Promise<Application | null> {
+    const result = await pool.query(
+      "SELECT * FROM applications WHERE id = $1",
+      [id]
+    );
+
+    return result.rows[0] ?? null;
+  },
+
   async create(data: CreateApplicationInput): Promise<Application> {
     const result = await pool.query(
       `INSERT INTO applications (
